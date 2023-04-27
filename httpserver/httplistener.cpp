@@ -10,6 +10,8 @@
 
 using namespace stefanfrings;
 
+const quint16 STANDARD_PORT {51234};
+
 HttpListener::HttpListener(const QSettings* settings, HttpRequestHandler* requestHandler, QObject *parent)
     : QTcpServer(parent)
 {
@@ -39,6 +41,8 @@ void HttpListener::listen()
 
     QString host = settings->value("host").toString();
     quint16 port = settings->value("port").toUInt() & 0xFFFF;
+
+    if (port == 0) port = STANDARD_PORT;
 
     QTcpServer::listen(host.isEmpty() ? QHostAddress::Any : QHostAddress(host), port);
 

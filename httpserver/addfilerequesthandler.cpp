@@ -17,7 +17,7 @@ void AddFileRequestHandler::service(HttpRequest &request, HttpResponse &response
     }
 
     QString errorMessage;
-    const QByteArray content {IpfsJsonRPC::addFile(request.getUploadedFile("myfile")->readAll(), errorMessage)};
+    QByteArray content {IpfsJsonRPC::addFile(request.getUploadedFile("myfile")->readAll(), request.getParameterMap().contains("pin"), errorMessage)};
 
     response.setStatus(200);
     response.write(content.isEmpty() ? errorMessage.toUtf8() : content);

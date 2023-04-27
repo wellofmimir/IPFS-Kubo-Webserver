@@ -49,7 +49,7 @@ QByteArray IpfsJsonRPC::getFile(const QString &cid, QString &errorMessage)
     return content.toHex();
 }
 
-QByteArray IpfsJsonRPC::addFile(const QByteArray &data, QString &errorMessage)
+QByteArray IpfsJsonRPC::addFile(const QByteArray &data, bool pin, QString &errorMessage)
 {
     if (data.isEmpty())
     {
@@ -68,7 +68,7 @@ QByteArray IpfsJsonRPC::addFile(const QByteArray &data, QString &errorMessage)
         loop.quit();
     });
 
-    QNetworkRequest request {QUrl{"http://127.0.0.1:5001/api/v0/add"}};
+    QNetworkRequest request {QUrl{QString{"http://127.0.0.1:5001/api/v0/add%1"}.arg(pin ? "?pin=true" : "")}};
     request.setHeader(QNetworkRequest::UserAgentHeader, "IPFSJSONRPC");
 
     QHttpPart textPart;

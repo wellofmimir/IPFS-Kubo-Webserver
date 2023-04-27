@@ -24,7 +24,7 @@ class IpfsJsonRPC : public QObject
 
 public:
     static QByteArray getFile(const QString &cid, QString &errorMessage);
-    static QByteArray addFile(const QByteArray &data, QString &errorMessage);
+    static QByteArray addFile(const QByteArray &data, bool pin, QString &errorMessage);
     static QByteArray toCIDv1(const QString &cidv0, QString &errorMessage);
 };
 
